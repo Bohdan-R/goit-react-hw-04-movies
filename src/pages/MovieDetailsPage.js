@@ -3,6 +3,7 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 import moviesApi from '../components/Api/Api-server';
 import Cast from '../components/Cast';
 import Review from '../components/Review';
+import routes from '../routes';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -19,22 +20,33 @@ class MovieDetailsPage extends Component {
     const response = await moviesApi.fetchMovieDetails(movieId);
 
     this.setState({
-      img: response['poster_path'],
+      img: `https://image.tmdb.org/t/p/w500/${response.poster_path}`,
       title: response.title,
       overview: response.overview,
-      vote: response['vote_average'],
+      vote: response.vote_average,
       genres: response.genres,
-      date: response['release_date'].slice(0, 4),
+      date: response.release_date.slice(0, 4),
     });
   }
+
+  handleGoBack = () => {
+    const { location, history } = this.props;
+
+    if (location.state && location.state.from) {
+      return history.push(location.state.from);
+    }
+    history.push(routes.home);
+  };
 
   a = () => {
     console.log(this.state);
   };
   render() {
     const { img, overview, title, vote, genres, date } = this.state;
-    const { match } = this.props;
+    const { match, location, history } = this.props;
 
+    /* console.log(location.state.from);
+    console.log(match); */
     return (
       <>
         <div>
@@ -58,8 +70,8 @@ class MovieDetailsPage extends Component {
                 ))}
               </ul>
             </div>
-            <button type="button" onClick={this.a}>
-              Open
+            <button type="button" onClick={this.handleGoBack}>
+              Back
             </button>
           </div>
 

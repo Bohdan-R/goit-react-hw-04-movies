@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import moviesApi from '../components/Api/Api-server';
+import MoviesList from '../components/MoviesList';
 
 const apiKey = '3550330ecc32a34c7342dbd44dd96d6e';
 
@@ -20,6 +21,11 @@ class MoviesPage extends Component {
 
   handleSearchMovies = () => {
     const { searchQuery } = this.state;
+
+    if (searchQuery === '') {
+      return;
+    }
+
     moviesApi.fetchMovies(searchQuery).then(movies => {
       console.log(movies);
       this.setState({ searchMovies: movies });
@@ -55,13 +61,7 @@ class MoviesPage extends Component {
             Searchasdas
           </button>
         </div>
-        <ul>
-          {searchMovies.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`${match.url}/${id}`}>{title}</Link>
-            </li>
-          ))}
-        </ul>
+        <MoviesList movies={searchMovies} />
       </>
     );
   }

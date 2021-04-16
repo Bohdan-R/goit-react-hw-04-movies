@@ -19,13 +19,7 @@ class HomePage extends Component {
     return (
       <div>
         <h1>Trending Today</h1>
-        <ul>
-          {popularMovies.map(({ id, title }) => (
-            <li key={id}>
-              <NavLink to={`/movies/${id}`}>{title}</NavLink>
-            </li>
-          ))}
-        </ul>
+        <MoviesList movies={popularMovies} />
         <button type="button" onClick={console.log(this.state.popularMovies)}>
           Open
         </button>

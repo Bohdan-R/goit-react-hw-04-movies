@@ -26,6 +26,16 @@ const fetchMovieDetails = movieId => {
     .then(data => data);
 };
 
+const fetchMovieImgUrl = movieId => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiKey}`,
+  )
+    .then(response => response.json())
+    .then(data => data);
+  /* const imgUrl = `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiKey}`;
+  return imgUrl; */
+};
+
 const fetchMovieCast = movieId => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`,
@@ -46,6 +56,7 @@ export default {
   fetchPopularMovies,
   fetchMovies,
   fetchMovieDetails,
+  fetchMovieImgUrl,
   fetchMovieCast,
   fetchMovieReview,
 };
