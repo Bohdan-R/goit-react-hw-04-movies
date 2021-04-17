@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import moviesApi from '../Api/Api-server';
+import PropTypes from 'prop-types';
+import './Cast.scss';
 
 class Cast extends Component {
   state = {
@@ -15,31 +17,28 @@ class Cast extends Component {
     });
   }
 
-  a = () => {
-    console.log(this.state);
-  };
-
   render() {
     const { cast } = this.state;
     return (
-      <div>
-        <ul>
-          {cast.map(actor => (
-            <li key={actor.id}>
+      <ul className="list">
+        {cast.map(actor => (
+          <li key={actor.id}>
+            <div className="cast-card">
               <img
                 src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
               />
               <p>{actor.name}</p>
               <p>Character: {actor.character}</p>
-            </li>
-          ))}
-        </ul>
-        <button type="button" onClick={this.a}>
-          Open
-        </button>
-      </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     );
   }
 }
+
+Cast.propTypes = {
+  movieId: PropTypes.number.isRequired,
+};
 
 export default Cast;

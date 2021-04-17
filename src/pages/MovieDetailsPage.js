@@ -4,6 +4,7 @@ import moviesApi from '../components/Api/Api-server';
 import Cast from '../components/Cast';
 import Review from '../components/Review';
 import routes from '../routes';
+import './MovieDetailsPage.scss';
 
 class MovieDetailsPage extends Component {
   state = {
@@ -38,18 +39,16 @@ class MovieDetailsPage extends Component {
     history.push(routes.home);
   };
 
-  a = () => {
-    console.log(this.state);
-  };
   render() {
     const { img, overview, title, vote, genres, date } = this.state;
     const { match, location, history } = this.props;
 
-    /* console.log(location.state.from);
-    console.log(match); */
     return (
       <>
         <div>
+          <button type="button" onClick={this.handleGoBack}>
+            Go back
+          </button>
           <div className="article">
             <div className="article__img-wrap">
               <img src={img} alt={title} className="article__img" />
@@ -62,7 +61,7 @@ class MovieDetailsPage extends Component {
               <h3 className="article__overview-title">Overview</h3>
               <p className="article__overview">{overview}</p>
               <h3 className="article__genre">Genres</h3>
-              <ul className="article__genre__list">
+              <ul className="article__genre__list list">
                 {genres.map(({ id, name }) => (
                   <li key={id} className="article__genre__item">
                     {name}
@@ -70,18 +69,28 @@ class MovieDetailsPage extends Component {
                 ))}
               </ul>
             </div>
-            <button type="button" onClick={this.handleGoBack}>
-              Back
-            </button>
           </div>
 
-          <div>
-            <ul>
+          <div className="movie-info">
+            <p>Additional information</p>
+            <ul className="list">
               <li>
-                <NavLink to={`${match.url}/cast`}>Cast</NavLink>
+                <NavLink
+                  to={`${match.url}/cast`}
+                  className="nav__link"
+                  activeClassName="nav__link--active"
+                >
+                  Cast
+                </NavLink>
               </li>
               <li>
-                <NavLink to={`${match.url}/review`}>Reviews</NavLink>
+                <NavLink
+                  to={`${match.url}/review`}
+                  className="nav__link"
+                  activeClassName="nav__link--active"
+                >
+                  Reviews
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -90,11 +99,11 @@ class MovieDetailsPage extends Component {
         <Switch>
           <Route
             path={`${match.path}/cast`}
-            render={() => <Cast movieId={match.params.movieId} />}
+            render={() => <Cast movieId={Number(match.params.movieId)} />}
           />
           <Route
             path={`${match.path}/review`}
-            render={() => <Review movieId={match.params.movieId} />}
+            render={() => <Review movieId={Number(match.params.movieId)} />}
           />
         </Switch>
       </>

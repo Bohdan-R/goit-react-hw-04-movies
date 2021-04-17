@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const MoviesList = ({ movies, location }) => {
   return (
-    <ul>
+    <ul className="movie-list list">
       {movies.map(({ id, title }) => (
-        <li key={id}>
+        <li key={id} className="movie-item">
           <Link
             to={{
               pathname: `movies/${id}`,
@@ -20,6 +21,11 @@ const MoviesList = ({ movies, location }) => {
       ))}
     </ul>
   );
+};
+
+MoviesList.propTypes = {
+  movies: PropTypes.array.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(MoviesList);

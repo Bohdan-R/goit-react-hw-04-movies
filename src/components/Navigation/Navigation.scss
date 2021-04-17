@@ -1,0 +1,16 @@
+.nav { 
+padding: 10px;
+margin-bottom: 20px;
+box-shadow: 0px 5px 5px rgba(0,0,0,.2);
+}
+
+.nav__link {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 20px;
+    color: currentColor;
+}
+
+.nav__link--active {
+    color: palevioletred;
+}

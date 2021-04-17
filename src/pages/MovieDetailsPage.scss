@@ -1,0 +1,28 @@
+.article {
+    width: 1000px;
+    display: flex;
+    margin-bottom: 20px;
+}
+.article__img-wrap {
+    width: 250px;
+}
+
+.article__content {
+    width: 750px;
+    padding: 10px 20px;
+}
+
+.article__genre__list {
+    display: flex;
+}
+
+.article__genre__item {
+    margin-right: 10px;
+}
+
+.movie-info {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-top: 1px solid #212121;
+    border-bottom: 1px solid #212121;
+}

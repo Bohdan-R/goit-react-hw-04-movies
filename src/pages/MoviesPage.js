@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
 import moviesApi from '../components/Api/Api-server';
 import MoviesList from '../components/MoviesList';
-
-const apiKey = '3550330ecc32a34c7342dbd44dd96d6e';
 
 class MoviesPage extends Component {
   state = {
@@ -27,21 +24,12 @@ class MoviesPage extends Component {
     }
 
     moviesApi.fetchMovies(searchQuery).then(movies => {
-      console.log(movies);
       this.setState({ searchMovies: movies });
     });
-  };
-  a = () => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/504949?api_key=${apiKey}&language=en-US`,
-    )
-      .then(response => response.json())
-      .then(data => console.log(data));
   };
 
   render() {
     const { searchQuery, searchMovies } = this.state;
-    const { match } = this.props;
 
     return (
       <>
@@ -56,12 +44,8 @@ class MoviesPage extends Component {
           <button type="button" onClick={this.handleSearchMovies}>
             Search
           </button>
-
-          <button type="button" onClick={this.a}>
-            Searchasdas
-          </button>
         </div>
-        <MoviesList movies={searchMovies} />
+        {searchMovies && <MoviesList movies={searchMovies} />}
       </>
     );
   }
