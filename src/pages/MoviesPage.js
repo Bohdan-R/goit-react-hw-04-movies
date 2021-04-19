@@ -8,6 +8,20 @@ class MoviesPage extends Component {
     searchMovies: [],
   };
 
+  componentDidMount() {
+    const { search } = this.props.location;
+    if (search) {
+      moviesApi.fetchMovies(search).then(movies => {
+        this.setState({
+          searchQuery: '',
+          searchMovies: movies,
+        });
+      });
+    }
+
+    return;
+  }
+
   handleChange = e => {
     const { name, value } = e.currentTarget;
 
@@ -16,15 +30,21 @@ class MoviesPage extends Component {
     });
   };
 
-  handleSearchMovies = () => {
+  handleSearchMovies = e => {
+    e.preventDefault();
+
     const { searchQuery } = this.state;
+    this.props.location.search = searchQuery;
 
     if (searchQuery === '') {
       return;
     }
 
     moviesApi.fetchMovies(searchQuery).then(movies => {
-      this.setState({ searchMovies: movies });
+      this.setState({
+        searchQuery: '',
+        searchMovies: movies,
+      });
     });
   };
 
@@ -34,16 +54,16 @@ class MoviesPage extends Component {
     return (
       <>
         <div>
-          <input
-            type="text"
-            name="searchQuery"
-            value={searchQuery}
-            onChange={this.handleChange}
-          />
+          <form onSubmit={this.handleSearchMovies}>
+            <input
+              type="text"
+              name="searchQuery"
+              value={searchQuery}
+              onChange={this.handleChange}
+            />
 
-          <button type="button" onClick={this.handleSearchMovies}>
-            Search
-          </button>
+            <button type="submit">Search</button>
+          </form>
         </div>
         {searchMovies && <MoviesList movies={searchMovies} />}
       </>
