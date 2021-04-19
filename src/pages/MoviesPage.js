@@ -11,12 +11,7 @@ class MoviesPage extends Component {
   componentDidMount() {
     const { search } = this.props.location;
     if (search) {
-      moviesApi.fetchMovies(search).then(movies => {
-        this.setState({
-          searchQuery: '',
-          searchMovies: movies,
-        });
-      });
+      this.getSearchedMovies(search);
     }
 
     return;
@@ -40,7 +35,11 @@ class MoviesPage extends Component {
       return;
     }
 
-    moviesApi.fetchMovies(searchQuery).then(movies => {
+    this.getSearchedMovies(searchQuery);
+  };
+
+  getSearchedMovies = query => {
+    moviesApi.fetchMovies(query).then(movies => {
       this.setState({
         searchQuery: '',
         searchMovies: movies,
